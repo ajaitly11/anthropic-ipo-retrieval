@@ -4,9 +4,9 @@ Ten investor questions, one 92,000-word SEC filing (Anthropic's S-1/A, 17 Nov 20
 
 | Method | Answer reached the model (top 8 chunks) |
 |---|---|
-| Vector RAG (bge-base, 504 chunks) | 6/10 |
-| Keyword search (BM25) | 4/10 |
-| Claude with only grep, outline and a line reader | 10/10 correct answers, each with a line citation |
+| Standard RAG (chunking + vector search, bge-base) | 6/10 |
+| Keyword search (BM25 over the same chunks) | 4/10 |
+| Claude + three tools (search, outline, read lines) | 10/10 correct answers, each with a line citation |
 
 The site replays the agent's recorded tool calls and runs RAG and BM25 live in your browser, including on your own questions. For your own questions the agent can also run live in the browser on Qwen3 (1.7B or 4B, Apache 2.0, weights from Hugging Face via WebLLM), with the same three tools. That needs WebGPU and a 1 to 2.3 GB one-time download, and small models answer less reliably than Claude.
 
