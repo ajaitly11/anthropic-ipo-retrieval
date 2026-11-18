@@ -23,19 +23,19 @@
     <div class="bento reveal">
       <article class="card dark win">
         <div class="orb" aria-hidden="true"></div>
-        <p class="label light">Agent with three tools</p>
+        <p class="label light">Claude + three tools</p>
         <p class="big"><span class="count" data-to="10">0</span><span class="of">/10</span></p>
         <p class="sub">Claude searches, reads, and searches again. Every answer cites the line it came from.</p>
       </article>
       <article class="card">
-        <p class="label">Vector RAG</p>
+        <p class="label">Standard RAG</p>
         <p class="big"><span class="count" data-to="6">0</span><span class="of">/10</span></p>
-        <p class="sub">504 chunks, the 8 closest in meaning go to the model.</p>
+        <p class="sub">Chunking and vector search. The 8 chunks closest in meaning go to the model.</p>
       </article>
       <article class="card">
-        <p class="label">Keyword search alone</p>
+        <p class="label">Keyword search</p>
         <p class="big"><span class="count" data-to="4">0</span><span class="of">/10</span></p>
-        <p class="sub">The 8 chunks that share the most words with the question.</p>
+        <p class="sub">Picks chunks by matching words instead of meaning. The top 8 go to the model.</p>
       </article>
     </div>
   </header>
@@ -74,7 +74,7 @@
 
     <div class="card matrix-card">
       <table class="matrix" id="matrix">
-        <thead><tr><th class="label">Question</th><th class="label">Vector RAG</th><th class="label">Keyword</th><th class="label">Agent</th></tr></thead>
+        <thead><tr><th class="label">Question</th><th class="label">Standard RAG</th><th class="label">Keyword</th><th class="label">Claude + tools</th></tr></thead>
         <tbody></tbody>
         <tfoot><tr><td class="label">Answered</td><td class="tot">6/10</td><td class="tot">4/10</td><td class="tot win">10/10</td></tr></tfoot>
       </table>
@@ -86,9 +86,9 @@
     <div class="arena" id="arena" hidden>
       <p class="arena-q" id="arenaQ"></p>
       <div class="cols">
-        <div class="card col"><div class="col-head"><p class="label">Vector RAG</p><p class="status" id="st-rag"></p></div><div class="strip" id="strip-rag"></div><div class="col-body" id="col-rag"></div></div>
+        <div class="card col"><div class="col-head"><p class="label">Standard RAG</p><p class="status" id="st-rag"></p></div><div class="strip" id="strip-rag"></div><div class="col-body" id="col-rag"></div></div>
         <div class="card col"><div class="col-head"><p class="label">Keyword search</p><p class="status" id="st-kw"></p></div><div class="strip" id="strip-kw"></div><div class="col-body" id="col-kw"></div></div>
-        <div class="card col agent"><div class="col-head"><p class="label" id="agLabel">Agent · Claude Sonnet</p><p class="status" id="st-ag"></p></div><div class="col-body" id="col-ag"></div></div>
+        <div class="card col agent"><div class="col-head"><p class="label" id="agLabel">Claude + three tools</p><p class="status" id="st-ag"></p></div><div class="col-body" id="col-ag"></div></div>
       </div>
     </div>
   </section>
@@ -117,6 +117,6 @@
   </div>
 </div>
 
-<script type="module" src="app.js?v=8"></script>
+<script type="module" src="app.js?v=9"></script>
 </body>
 </html>

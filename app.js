@@ -223,7 +223,7 @@ function play(i) {
   const my = ++run, q = META.questions[i];
   openArena(q.q);
   strip("rag", q.rag.rank); strip("kw", q.kw.rank);
-  $("agLabel").textContent = "Agent · Claude Sonnet";
+  $("agLabel").textContent = "Claude + three tools";
   showChunks("rag", q.rag.ids.slice(0, K), q.gold, null, my);
   showChunks("kw", q.kw.ids.slice(0, K), q.gold, null, my);
   showAgent(q, my).then(() => { if (my === run) liveOffer(q.q, my, true); });
@@ -235,7 +235,7 @@ async function playCustom(text) {
   const terms = tokenize(text).filter((t) => !STOP.has(t));
   showChunks("kw", topK(bm25(text), K), null, terms, my);
   strip("rag", null); strip("kw", null);
-  $("col-ag").innerHTML = ""; setStatus("ag", ""); $("agLabel").textContent = "Agent · open model";
+  $("col-ag").innerHTML = ""; setStatus("ag", ""); $("agLabel").textContent = "Open model + three tools";
   liveOffer(text, my, false);
   $("col-rag").innerHTML = ""; setStatus("rag", embedder ? "Embedding…" : "Loading model…");
   try {
@@ -336,7 +336,7 @@ function parseCall(text) {
 async function runLive(question, id, my, afterReplay) {
   const body = $("col-ag");
   if (afterReplay) { const hr = document.createElement("p"); hr.className = "label"; hr.style.margin = "22px 0 4px"; hr.textContent = `Live · ${id.split("-q4")[0].replace("-", " ")}`; body.appendChild(hr); }
-  else $("agLabel").textContent = `Agent · ${id.split("-q4")[0].replace("-", " ")}`;
+  else $("agLabel").textContent = `${id.split("-q4")[0].replace("-", " ")} + three tools`;
   const prog = document.createElement("div"); prog.className = "live";
   prog.innerHTML = `<p class="note-card" id="progText">Loading the model…</p><div class="progress"><div></div></div>`;
   body.appendChild(prog);
