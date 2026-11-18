@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RAG vs an agent on Anthropic's IPO filing</title>
+<meta name="description" content="Three retrieval methods answer ten investor questions from Anthropic's 92,000-word S-1. Watch each one search, live in your browser.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Space+Grotesk:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=1">
+</head>
+<body>
+<main>
+  <header class="hero">
+    <div class="eyebrow">Anthropic S-1 · filed 17 Nov 2026 · runs in your browser</div>
+    <h1>Three ways to make AI read <span class="accent">Anthropic's IPO filing</span></h1>
+    <p class="lede">I asked Anthropic's 92,000-word IPO filing ten questions an investor would ask, using three retrieval methods. Only one got all ten right. Pick a question and watch each method search.</p>
+
+    <div class="score">
+      <div class="card rag"><span class="tag">Vector RAG</span><span class="num"><b>6</b>/10</span><p>Cuts the filing into 504 chunks and hands the model the 8 closest in meaning.</p></div>
+      <div class="card kw"><span class="tag">Keyword search</span><span class="num"><b>4</b>/10</span><p>Hands the model the 8 chunks that share the most words with your question (BM25).</p></div>
+      <div class="card ag"><span class="tag">Agent with keyword tools</span><span class="num"><b>10</b>/10</span><p>Claude searches, reads, and searches again, using only grep, an outline and a line reader.</p></div>
+    </div>
+
+    <p class="paper">The agent's tools come from <a href="https://arxiv.org/abs/2608.06305" target="_blank" rel="noopener">"Beyond Top-K"</a>, a paper by a team at IIT Patna and the AI lab TwoSpoon, who found chunk-and-embed RAG breaks on long financial reports. <a href="https://github.com/twospoon/READ" target="_blank" rel="noopener">Their code is open source.</a></p>
+  </header>
+
+  <section class="ask">
+    <h2>Pick a question</h2>
+    <div class="chips" id="chips"></div>
+    <form id="custom" class="custom">
+      <input id="customQ" type="text" placeholder="Or type your own question about the filing" autocomplete="off" maxlength="200">
+      <button type="submit">Search</button>
+    </form>
+    <p class="note" id="customNote" hidden>Your own questions run RAG and keyword search live on your device. The first one downloads a 110 MB embedding model, so it takes a moment. The agent column replays recorded runs, so it only covers the ten tested questions.</p>
+  </section>
+
+  <section class="race" id="race" hidden>
+    <h2 id="raceQ"></h2>
+    <div class="cols">
+      <div class="col rag"><div class="col-head"><span class="tag">Vector RAG</span><span class="status" id="st-rag"></span></div><div class="body" id="col-rag"></div></div>
+      <div class="col kw"><div class="col-head"><span class="tag">Keyword search</span><span class="status" id="st-kw"></span></div><div class="body" id="col-kw"></div></div>
+      <div class="col ag"><div class="col-head"><span class="tag">Agent</span><span class="status" id="st-ag"></span></div><div class="body" id="col-ag"></div></div>
+    </div>
+  </section>
+
+  <section class="how">
+    <h2>How the test worked</h2>
+    <div class="grid">
+      <div><b>The document</b><p>Anthropic's S-1 amendment filed with the SEC on 17 November 2026, converted to text: 4,733 lines and about 92,000 words. <a id="filingLink" target="_blank" rel="noopener">Read the filing</a>.</p></div>
+      <div><b>RAG and keyword search</b><p>Both split the filing into 504 chunks of about 2,000 characters. RAG ranks chunks with the bge-base embedding model, keyword search with BM25. A question counts as found when the answer is inside the top 8 chunks. At 16 chunks RAG finds 8 and keyword search 7.</p></div>
+      <div><b>The agent</b><p>Claude Sonnet in Claude Code, with every tool removed except the paper's grep, outline and line reader. Each question ran on its own. The replays show its real tool calls and results at their recorded pace.</p></div>
+      <div><b>Limits</b><p>Ten questions on one document, so treat this as a demo, not a benchmark. RAG and keyword search are scored on whether the answer reached the model, the agent on its final answer. The agent is slower and costs more: about 9 seconds and 8 cents a question here, against well under a second for the other two.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Built by <b>Arnav Jaitly</b> on the open-source <a href="https://github.com/twospoon/READ" target="_blank" rel="noopener">READ</a> tools (MIT licence). The filing is a public SEC document. Not investment advice.</p>
+  </footer>
+</main>
+
+<div class="viewer" id="viewer" hidden>
+  <div class="viewer-box">
+    <div class="viewer-head"><span id="viewerTitle"></span><button id="viewerClose" aria-label="Close">×</button></div>
+    <div class="viewer-body" id="viewerBody"></div>
+  </div>
+</div>
+
+<script type="module" src="app.js?v=1"></script>
+</body>
+</html>

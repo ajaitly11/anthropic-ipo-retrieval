@@ -1,0 +1,887 @@
+{
+ "questions": [
+  {
+   "q": "How much of Anthropic's own code is written by Claude?",
+   "gold": [
+    "over 90%"
+   ],
+   "lines": [
+    1532
+   ],
+   "rag": {
+    "ids": [
+     16,
+     276,
+     201,
+     299,
+     277,
+     252,
+     321,
+     289,
+     290,
+     298,
+     278,
+     270,
+     273,
+     200,
+     258,
+     204
+    ],
+    "hit8": true,
+    "hit16": true
+   },
+   "kw": {
+    "ids": [
+     252,
+     273,
+     298,
+     249,
+     289,
+     196,
+     16,
+     15,
+     271,
+     250,
+     276,
+     0,
+     259,
+     197,
+     290,
+     248
+    ],
+    "hit8": true,
+    "hit16": true
+   },
+   "agent": {
+    "steps": [
+     {
+      "tool": "grep",
+      "input": {
+       "query": "code written by Claude"
+      },
+      "result": "No matches for 'code written by Claude'. Try a shorter query, a single distinctive word, or memory_outline to navigate by section headings instead."
+     },
+     {
+      "tool": "grep",
+      "input": {
+       "query": "our code",
+       "max_matches": 10
+      },
+      "result": "anthropic-s1a3.md\n  1530- ### **Operating Efficiency** \n  1531- \n  1532: Our operating efficiency is derived from our high talent density, our efficient go-to-market, and how extensively our teams leverage Claude in their work. Claude is the common thread, amplifying the output of our employees. For example, over 90% of the contributions to our codebase in September 2026 were written by Claude. \n  1533- \n  1534- ###### **<u>Table of Contents</u>** \n  --\n  2150- Claude itself has become one of the most powerful drivers of our progress—each new version of a Claude model directly accelerates development of the next. Many aspects of the research, training, and testing of subsequent model generations now involve Claude, including running experiments, generating and processing training data, automating evaluations and safety audits, and writing and reviewing code. We refer to this recursive dynamic as “closing the loop.” A direct expression of this dynamic i …[truncated]\n  2151- \n  2152: A clear example of our ability to close the loop is the deployment of Claude Code, our agentic coding product, across our engineering organization. As our models have advanced, we have seen significant improvement in Claude’s capability on more challenging, open-ended engineering problems that lack a clear specification and have historically depended on experienced human judgment. Claude’s success rate on these problems reached approximately 90% in September 2026, up approximately 50 percentage  …["
+     }
+    ],
+    "answer": "Over 90% of the contributions to Anthropic's codebase in September 2026 were written by Claude, per line 1532 of `anthropic-s1a3.md`.",
+    "ms": 6298,
+    "turns": 4,
+    "cost": 0.0662
+   }
+  },
+  {
+   "q": "How much money has Anthropic committed to spend on compute and data centres?",
+   "gold": [
+    "900.9 billion"
+   ],
+   "lines": [
+    768,
+    2300
+   ],
+   "rag": {
+    "ids": [
+     204,
+     203,
+     321,
+     196,
+     449,
+     300,
+     299,
+     238,
+     195,
+     237,
+     202,
+     239,
+     289,
+     45,
+     7,
+     476
+    ],
+    "hit8": false,
+    "hit16": false
+   },
+   "kw": {
+    "ids": [
+     237,
+     203,
+     448,
+     250,
+     238,
+     202,
+     239,
+     93,
+     298,
+     273,
+     240,
+     116,
+     449,
+     45,
+     17,
+     48
+    ],
+    "hit8": true,
+    "hit16": true
+   },
+   "agent": {
+    "steps": [
+     {
+      "tool": "grep",
+      "input": {
+       "query": "committed to spend compute data center",
+       "max_matches": 10
+      },
+      "result": "No matches for 'committed to spend compute data center'. Try a shorter query, a single distinctive word, or memory_outline to navigate by section headings instead."
+     },
+     {
+      "tool": "list",
+      "input": {},
+      "result": "anthropic-s1a3.md  (617.0 KB, 4,734 lines)"
+     },
+     {
+      "tool": "grep",
+      "input": {
+       "query": "compute commitments",
+       "max_matches": 10
+      },
+      "result": "anthropic-s1a3.md\n  866- **_Our reliance on a limited number of CSPs and suppliers, some of which have strategic and investment relationships with us and are our customers, creates complex dynamics that could give rise to conflicts of interest and adversely affect our access to compute._** \n  867- \n  868: We rely on a limited number of CSPs—Amazon, Google, and Microsoft—and suppliers, such as Broadcom, for compute and critical components of our compute infrastructure. These relationships are governed by contractual arrangements that, while providing us with significant committed compute, also create dependencies and potential vulnerabilities. These CSPs may experience service outages, security incidents, or capacity constraints that affect our operations. The terms of our arrangements, including  …[truncated]\n  869- \n  870- ###### **<u>Table of Contents</u>** \n\n1 matching line(s)."
+     },
+     {
+      "tool": "grep",
+      "input": {
+       "query": "committed to spend",
+       "max_matches": 10
+      },
+      "result": "anthropic-s1a3.md\n  2002- $150.0 billion, which are not included in the contractual obligations table above. \n  2003- \n  2004: In April 2026, we entered into an agreement with Amazon, pursuant to which we committed to spend an aggregate of at least $110.0 billion between May 2026 and April 2036, regardless of actual usage. If our actual spend falls short, we must pay Amazon the difference as a true-up subject to certain adjustments and exceptions if available. Our commitment under such agreement is non-cancelable except in the event of Amazon’s uncured material breach. \n  2005- \n  2006- Between May and October 2026, we entered into and amended several agreements with SpaceX.AI LLC (formerly known as X.AI LLC) (“SpaceXAI”), a wholly owned subsidiary of Space Exploration Technologies Corp. (collectively, the “SpaceXAI Arrangements”), to access compute powered by NVIDIA GPUs. Under the SpaceXAI Arrangements, we agreed to spend an aggregate of up to $120.5 billion over terms extending into 2029, consisting of approximately $3.1 billion in the aggregate per month once all capacity h …[truncated]\n\n1 matching line(s)."
+     },
+     {
+      "tool": "read",
+      "input": {
+       "path": "anthropic-s1a3.md",
+       "start_line": 1980,
+       "end_line": 2012
+      },
+      "result": "1980: In aggregate, the contractual obligations in the table below plus the short-term and subsequent commitments, as well as leases not yet commenced, each described in the paragraphs below, are approximately $900.9 billion, substantially all of which is related to compute and infrastructure. Additionally, this amount excludes payments under certain other compute and infrastructure arrangements that do not specify a fixed dollar commitment. We estimate these payments to be in the range of $150 billio …[truncated]\n1981: \n1982: In general, to the extent counterparties do not fulfill obligations, such as meeting agreed upon delivery dates, we have the ability to terminate all or a portion of our obligations under such arrangements, or, under certain agreements, to obtain other specified remedies, such as service credits or adjustments to the timing of our commitments, rather than terminate. Approximately $186.2 billion of the aggregate total of our contractual obligations relates to arrangements that are subject to eith …[truncated]\n1983: \n1984: Payments under arrangements that do not specify a fixed dollar commitment will depend on the capacity made available and deployed, delivery timing, pricing mechanics, and the satisfaction, or our waiver, of certain other deployment conditions. Because these factors are not yet determinable, the total amount of payments under these arrangements is uncertain. We expect these amounts to be payable over time after the capacity is delivered."
+     }
+    ],
+    "answer": "Anthropic's S-1 says its contractual obligations, plus short-term and subsequent commitments and leases not yet commenced, total approximately $900.9 billion, \"substantially all of which is related to compute and infrastructure\" (line 1980 of anthropic-s1a3.md). That figure excludes a further estimated $150 billion or so of payments under arrangements with no fixed dollar commitment.",
+    "ms": 9377,
+    "turns": 7,
+    "cost": 0.0856
+   }
+  },
+  {
+   "q": "How much is Anthropic paying Elon Musk's company for compute?",
+   "gold": [
+    "120.5 billion"
+   ],
+   "lines": [
+    2006
+   ],
+   "rag": {
+    "ids": [
+     204,
+     203,
+     321,
+     238,
+     299,
+     239,
+     6,
+     7,
+     300,
+     449,
+     237,
+     196,
+     195,
+     22,
+     0,
+     298
+    ],
+    "hit8": true,
+    "hit16": true
+   },
+   "kw": {
+    "ids": [
+     250,
+     272,
+     448,
+     299,
+     273,
+     196,
+     290,
+     289,
+     476,
+     197,
+     298,
+     255,
+     261,
+     288,
+     0,
+     300
+    ],
+    "hit8": false,
+    "hit16": false
+   },
+   "agent": {
+    "steps": [
+     {
+      "tool": "grep",
+      "input": {
+       "query": "xAI",
+       "context": 2
+      },
+      "result": "anthropic-s1a3.md\n  2004- In April 2026, we entered into an agreement with Amazon, pursuant to which we committed to spend an aggregate of at least $110.0 billion between May 2026 and April 2036, regardless of actual usage. If our actual spend falls short, we must pay Amazon the difference as a true-up subject to certain adjustments and exceptions if available. Our commitment under such agreement is non-cancelable except in the event of Amazon’s uncured material breach. \n  2005- \n  2006: Between May and October 2026, we entered into and amended several agreements with SpaceX.AI LLC (formerly known as X.AI LLC) (“SpaceXAI”), a wholly owned subsidiary of Space Exploration Technologies Corp. (collectively, the “SpaceXAI Arrangements”), to access compute powered by NVIDIA GPUs. Under the SpaceXAI Arrangements, we agreed to spend an aggregate of up to $120.5 billion over terms extending into 2029, consisting of approximately $3.1 billion in the aggregate per month once all capacity h …[truncated]\n  2007- \n  2008- Under the Hardware Supply Agreement with AMD, which became effective upon signing in July 2026 and does not have a fixed term, we committed to obtain an initial tranche of compute capacity in calendar year 2027 by purchasing AMD-based Helios rack-scale systems from approved manufacturers or by accessing such systems through third-party service providers, provided certain conditions related to deployment proposals are met, or waived by us, including certain pricing, financ"
+     },
+     {
+      "tool": "grep",
+      "input": {
+       "query": "SpaceX",
+       "context": 2
+      },
+      "result": "anthropic-s1a3.md\n  2004- In April 2026, we entered into an agreement with Amazon, pursuant to which we committed to spend an aggregate of at least $110.0 billion between May 2026 and April 2036, regardless of actual usage. If our actual spend falls short, we must pay Amazon the difference as a true-up subject to certain adjustments and exceptions if available. Our commitment under such agreement is non-cancelable except in the event of Amazon’s uncured material breach. \n  2005- \n  2006: Between May and October 2026, we entered into and amended several agreements with SpaceX.AI LLC (formerly known as X.AI LLC) (“SpaceXAI”), a wholly owned subsidiary of Space Exploration Technologies Corp. (collectively, the “SpaceXAI Arrangements”), to access compute powered by NVIDIA GPUs. Under the SpaceXAI Arrangements, we agreed to spend an aggregate of up to $120.5 billion over terms extending into 2029, consisting of approximately $3.1 billion in the aggregate per month once all capacity h …[truncated]\n  2007- \n  2008- Under the Hardware Supply Agreement with AMD, which became effective upon signing in July 2026 and does not have a fixed term, we committed to obtain an initial tranche of compute capacity in calendar year 2027 by purchasing AMD-based Helios rack-scale systems from approved manufacturers or by accessing such systems through third-party service providers, provided certain conditions related to deployment proposals are met, or waived by us, including certain pricing, financ"
+     }
+    ],
+    "answer": "Anthropic agreed to spend up to $120.5 billion in aggregate (about $3.1 billion per month once all capacity is online) with SpaceX.AI LLC (formerly X.AI LLC), a wholly owned subsidiary of SpaceX, over terms extending into 2029, per line 2006 of `anthropic-s1a3.md`.",
+    "ms": 8405,
+    "turns": 4,
+    "cost": 0.0737
+   }
+  },
+  {
+   "q": "How many customers pay Anthropic more than a million dollars a year?",
+   "gold": [
+    "1,900 customers"
+   ],
+   "lines": [
+    1620
+   ],
+   "rag": {
+    "ids": [
+     300,
+     321,
+     204,
+     7,
+     6,
+     3,
+     22,
+     289,
+     199,
+     207,
+     0,
+     299,
+     21,
+     340,
+     2,
+     298
+    ],
+    "hit8": false,
+    "hit16": false
+   },
+   "kw": {
+    "ids": [
+     478,
+     199,
+     206,
+     487,
+     216,
+     477,
+     392,
+     124,
+     494,
+     197,
+     299,
+     208,
+     347,
+     80,
+     217,
+     343
+    ],
+    "hit8": true,
+    "hit16": true
+   },
+   "agent": {
+    "steps": [
+     {
+      "tool": "grep",
+      "input": {
+       "query": "more than $1 million",
+       "context": 2
+      },
+      "result": "No matches for 'more than $1 million'. Try a shorter query, a single distinctive word, or memory_outline to navigate by section headings instead."
+     },
+     {
+      "tool": "grep",
+      "input": {
+       "query": "$1 million",
+       "context": 2
+      },
+      "result": "anthropic-s1a3.md\n  1618- \n  1619- \n  1620: In addition, as of September 30, 2026, we had more than 1,900 customers with $1 million or more of revenue on a TTM basis and approximately 250 customers with $10 million or more of revenue on a TTM basis. Despite this growth, our penetration into the largest enterprises remains early. Over 50% of the Fortune 500 and over 30% of the Global 2000 were customers with $100,000 or more of revenue on a TTM basis as of September 30, 2026. We believe we are in the early stages of our expansion within th …[truncated]\n  1621- \n  1622- We compare this measure against our largest Fortune 500 customers, who are further along in their adoption of AI. For the three months ended September 30, 2026, revenue from our top 10 Fortune 500 customers represented, on average, less than 1% of their total expenses—still a small fraction of their overall spend, but over eight times the average of our Fortune 500 customers with $100,000 or more of revenue on a TTM basis. We believe the difference reflects the substantial runway we have to deep …[truncated]\n  --\n  3016- ##### **_Tax Considerations_** \n  3017- \n  3018: Section 162(m) of the Code imposes a $1 million limit on the amount of compensation that we may deduct as a business expense in any year with regard to certain of our most highly paid executive officers. While our board of directors considers the deductibility of compensation as one factor in determining executive compensation, our board of direct"
+     }
+    ],
+    "answer": "Anthropic's S-1 says that, as of September 30, 2026, it had more than 1,900 customers with $1 million or more of trailing-twelve-month revenue. I read this at line 1620 of `anthropic-s1a3.md`.\n\nThe filing's threshold is \"$1 million or more\" on a TTM basis, which is slightly broader than your \"more than a million dollars a year\".",
+    "ms": 9212,
+    "turns": 4,
+    "cost": 0.0711
+   }
+  },
+  {
+   "q": "What will Anthropic's stock ticker be?",
+   "gold": [
+    "“ANT.”",
+    "“ANT”"
+   ],
+   "lines": [
+    33,
+    3669
+   ],
+   "rag": {
+    "ids": [
+     3,
+     22,
+     2,
+     300,
+     21,
+     7,
+     0,
+     321,
+     322,
+     299,
+     6,
+     5,
+     494,
+     489,
+     4,
+     204
+    ],
+    "hit8": true,
+    "hit16": true
+   },
+   "kw": {
+    "ids": [
+     299,
+     298,
+     285,
+     39,
+     125,
+     271,
+     248,
+     40,
+     454,
+     290,
+     6,
+     22,
+     439,
+     494,
+     450,
+     489
+    ],
+    "hit8": false,
+    "hit16": false
+   },
+   "agent": {
+    "steps": [
+     {
+      "tool": "grep",
+      "input": {
+       "query": "ticker symbol",
+       "context": 2
+      },
+      "result": "No matches for 'ticker symbol'. Try a shorter query, a single distinctive word, or memory_outline to navigate by section headings instead."
+     },
+     {
+      "tool": "grep",
+      "input": {
+       "query": "ticker"
+      },
+      "result": "No matches for 'ticker'. Try a shorter query, a single distinctive word, or memory_outline to navigate by section headings instead."
+     },
+     {
+      "tool": "list",
+      "input": {},
+      "result": "anthropic-s1a3.md  (617.0 KB, 4,734 lines)"
+     },
+     {
+      "tool": "grep",
+      "input": {
+       "query": "symbol"
+      },
+      "result": "anthropic-s1a3.md\n  31- **Subject to Completion. Dated November 17, 2026.** \n  32- \n  33: stockholders identified in this prospectus are selling an additional 23,648,646 shares of Class A common stock. We will not receive any proceeds from the sale of shares of our Class A common stock by any of the selling stockholders. Prior to this offering, there has been no public market for our Class A common stock. It is currently estimated that the initial public offering price per share will be between $70.00 and $78.00. We have been approved to list our Class A common stock on the Nasdaq Gl …[truncated]\n  34- \n  35- equals 50.1% of the total voting power of our outstanding shares of capital stock with respect to matters submitted to stockholders generally, including the election of our directors other than the Class T directors. Our Class F common stock will not have any economic rights. Immediately prior to the completion of this offering, we will also authorize a special class of our common stock, Class E common stock, which will be issued to our employees, excluding our co-founders. Our Class E common st …[truncated]\n  --\n  254- We were incorporated as a Delaware PBC in January 2021. Our principal executive offices are located at 548 Market Street, PMB 90375, San Francisco, California 94104, and our telephone number is (415) 326-6303. Our website address is www.anthropic.com. Information contained on, or that can be accessed through, our website does not constitute part of this p"
+     },
+     {
+      "tool": "grep",
+      "input": {
+       "query": "NYSE|Nasdaq|NASDAQ",
+       "regex": true,
+       "max_matches": 10
+      },
+      "result": "anthropic-s1a3.md\n  31- **Subject to Completion. Dated November 17, 2026.** \n  32- \n  33: stockholders identified in this prospectus are selling an additional 23,648,646 shares of Class A common stock. We will not receive any proceeds from the sale of shares of our Class A common stock by any of the selling stockholders. Prior to this offering, there has been no public market for our Class A common stock. It is currently estimated that the initial public offering price per share will be between $70.00 and $78.00. We have been approved to list our Class A common stock on the Nasdaq Gl …[truncated]\n  34- \n  35- equals 50.1% of the total voting power of our outstanding shares of capital stock with respect to matters submitted to stockholders generally, including the election of our directors other than the Class T directors. Our Class F common stock will not have any economic rights. Immediately prior to the completion of this offering, we will also authorize a special class of our common stock, Class E common stock, which will be issued to our employees, excluding our co-founders. Our Class E common st …[truncated]\n  36- \n  37- **Neither the Securities and Exchange Commission nor any other regulatory body has approved or disapproved of these securities or passed upon the accuracy or adequacy of this prospectus. Any representation to the contrary is a criminal offense.** \n  --\n  972- ##### **_business, financial condition, and results of operations._** \n  973- \n  974: As a publi"
+     }
+    ],
+    "answer": "Anthropic's Class A common stock will list on the Nasdaq Global Select Market under the symbol \"ANT\", per line 3669 of `anthropic-s1a3.md`.",
+    "ms": 9402,
+    "turns": 7,
+    "cost": 0.0872
+   }
+  },
+  {
+   "q": "What price range are the IPO shares being sold at?",
+   "gold": [
+    "$70.00 and $78.00"
+   ],
+   "lines": [
+    33
+   ],
+   "rag": {
+    "ids": [
+     3,
+     187,
+     190,
+     188,
+     191,
+     27,
+     413,
+     7,
+     500,
+     189,
+     385,
+     24,
+     28,
+     8,
+     31,
+     26
+    ],
+    "hit8": true,
+    "hit16": true
+   },
+   "kw": {
+    "ids": [
+     299,
+     394,
+     426,
+     231,
+     298,
+     425,
+     27,
+     202,
+     270,
+     375,
+     28,
+     363,
+     374,
+     499,
+     198,
+     7
+    ],
+    "hit8": false,
+    "hit16": false
+   },
+   "agent": {
+    "steps": [
+     {
+      "tool": "grep",
+      "input": {
+       "query": "price range",
+       "max_matches": 10
+      },
+      "result": "anthropic-s1a3.md\n  321- \n  322- <!-- Start of picture text -->\n  323: Stock options 1,774,342,693<br>RSUs 1,127,993,950<br>Total 2,168,788,227 30,643,060 853,394,043 1,774,342,693 1,127,993,950 1<br>Pro Forma Adjustments<br>Preferred Stock Conversion 4,408,097,245 4,153,017,914 (853,394,043)<br>Convertible Notes Conversion 276,827,518<br>RSU Settlement 49,754,965 (101,333,940)<br>Class F Stock Issuance 1<br>Class A common stock offered by us in this offering 801,351,354<br>Class N common stock issued in the concurrent private<br>placement 351,351,348<br>__________ …[truncated]\n  324- \n  325- - •the Preferred Stock Conversion will occur immediately prior to the completion of this offering; \n  --\n  331- - •no issuance of shares of Class E common stock prior to the completion of this offering; \n  332- \n  333: - •the issuance of an aggregate of 351,351,348 shares of our Class N common stock upon the closing of the concurrent private placement, at an assumed initial public offering price of $74.00 per share, which is the midpoint of the estimated offering price range set forth on the cover page of this prospectus; \n  334- \n  335- - •no exercise of outstanding stock options or settlement of outstanding RSUs subsequent to September 30, 2026, other than the RSU Settlement; and \n  --\n  1442- **<u>Table of Contents</u>** \n  1443- \n  1444: (1)Each $1.00 increase or decrease in the assumed initial public offering price of $74.00 per share, which is the midpoint of the estimated offering"
+     },
+     {
+      "tool": "list",
+      "input": {},
+      "result": "anthropic-s1a3.md  (617.0 KB, 4,734 lines)"
+     },
+     {
+      "tool": "grep",
+      "input": {
+       "query": "between $",
+       "max_matches": 10,
+       "path": "anthropic-s1a3.md"
+      },
+      "result": "anthropic-s1a3.md\n  31- **Subject to Completion. Dated November 17, 2026.** \n  32- \n  33: stockholders identified in this prospectus are selling an additional 23,648,646 shares of Class A common stock. We will not receive any proceeds from the sale of shares of our Class A common stock by any of the selling stockholders. Prior to this offering, there has been no public market for our Class A common stock. It is currently estimated that the initial public offering price per share will be between $70.00 and $78.00. We have been approved to list our Class A common stock on the Nasdaq Gl …[truncated]\n  34- \n  35- equals 50.1% of the total voting power of our outstanding shares of capital stock with respect to matters submitted to stockholders generally, including the election of our directors other than the Class T directors. Our Class F common stock will not have any economic rights. Immediately prior to the completion of this offering, we will also authorize a special class of our common stock, Class E common stock, which will be issued to our employees, excluding our co-founders. Our Class E common st …[truncated]\n\n1 matching line(s)."
+     }
+    ],
+    "answer": "The S-1 says the initial public offering price per share is currently estimated to be between $70.00 and $78.00 (line 33 of `anthropic-s1a3.md`), which fits the $74.00 midpoint quoted elsewhere in the filing.",
+    "ms": 8180,
+    "turns": 5,
+    "cost": 0.0797
+   }
+  },
+  {
+   "q": "How much revenue did Anthropic make from API usage in the first nine months of 2026?",
+   "gold": [
+    "26.3 billion"
+   ],
+   "lines": [
+    1562
+   ],
+   "rag": {
+    "ids": [
+     321,
+     204,
+     201,
+     22,
+     199,
+     299,
+     198,
+     207,
+     3,
+     300,
+     0,
+     196,
+     238,
+     208,
+     476,
+     21
+    ],
+    "hit8": true,
+    "hit16": true
+   },
+   "kw": {
+    "ids": [
+     215,
+     207,
+     214,
+     210,
+     208,
+     197,
+     209,
+     234,
+     444,
+     264,
+     198,
+     142,
+     436,
+     460,
+     199,
+     252
+    ],
+    "hit8": false,
+    "hit16": true
+   },
+   "agent": {
+    "steps": [
+     {
+      "tool": "grep",
+      "input": {
+       "query": "API revenue nine months ended September 30, 2026"
+      },
+      "result": "No matches for 'API revenue nine months ended September 30, 2026'. Try a shorter query, a single distinctive word, or memory_outline to navigate by section headings instead."
+     },
+     {
+      "tool": "list",
+      "input": {},
+      "result": "anthropic-s1a3.md  (617.0 KB, 4,734 lines)"
+     },
+     {
+      "tool": "grep",
+      "input": {
+       "query": "API",
+       "context": 1,
+       "max_matches": 40
+      },
+      "result": "anthropic-s1a3.md\n  32- \n  33: stockholders identified in this prospectus are selling an additional 23,648,646 shares of Class A common stock. We will not receive any proceeds from the sale of shares of our Class A common stock by any of the selling stockholders. Prior to this offering, there has been no public market for our Class A common stock. It is currently estimated that the initial public offering price per share will be between $70.00 and $78.00. We have been approved to list our Class A common stock on the Nasdaq Gl …[truncated]\n  34- \n  35: equals 50.1% of the total voting power of our outstanding shares of capital stock with respect to matters submitted to stockholders generally, including the election of our directors other than the Class T directors. Our Class F common stock will not have any economic rights. Immediately prior to the completion of this offering, we will also authorize a special class of our common stock, Class E common stock, which will be issued to our employees, excluding our co-founders. Our Class E common st …[truncated]\n  36- \n  --\n  130- \n  131: shape the standards for its safe and responsible development. Our frontier intelligence, Claude, is delivered to customers through our models, platform, and applications. Claude has experienced the fastest enterprise adoption of any technology in history, as demonstrated by revenue growing from $0 at commercial launch in the first quarter of 2023 to $17.0 billion for the three months ended Septembe"
+     },
+     {
+      "tool": "grep",
+      "input": {
+       "query": "Platform revenue",
+       "context": 1,
+       "max_matches": 15
+      },
+      "result": "No matches for 'Platform revenue'. Try a shorter query, a single distinctive word, or memory_outline to navigate by section headings instead."
+     },
+     {
+      "tool": "grep",
+      "input": {
+       "query": "API revenue",
+       "context": 1,
+       "max_matches": 15
+      },
+      "result": "No matches for 'API revenue'. Try a shorter query, a single distinctive word, or memory_outline to navigate by section headings instead."
+     },
+     {
+      "tool": "grep",
+      "input": {
+       "query": "consumption-based",
+       "context": 1,
+       "max_matches": 15
+      },
+      "result": "anthropic-s1a3.md\n  805- \n  806: Run-Rate Revenue is not a substitute for revenue prepared in accordance with GAAP or a forecast of revenue. Because Run-Rate Revenue annualizes our consumption-based fees for a trailing 28-day period and our subscription-based fees for a single month, it assumes that activity during those measurement periods has continued at the same rate for a full year. Because it annualizes a short measurement period, Run-Rate Revenue measured during a period of seasonally higher or lower usage, such as the r …[truncated]\n  807- \n  --\n  1557- \n  1558: minimum spend commitments in exchange for a committed price list. These contracts result primarily in consumption-based revenue. \n  1559- \n  --\n  1561- \n  1562: Consumption-based revenue increased from $288 million, or 75% of total revenue, for the year ended December 31, 2024, to $3.8 billion, or 83% of total revenue, for the year ended December 31, 2025, to $26.3 billion, or 79% of total revenue, for the nine months ended September 30, 2026. Subscription-based revenue increased from $98 million, or 25% of total revenue, to $789 million, or 17% of total revenue, to $6.9 billion, or 21% of total revenue, over the same periods. The larger dollar increase …[truncated]\n  1563- \n  --\n  1712- ||Revenue<br>$2,545<br>$33,24|\n  1713: |**Table of Content**<br>Revenue for the<br>nine months end<br>$24.2 billion and<br>nine months end<br>drove higher usa       f<br>$100,000 or mor<br>11,900 as of Sept<br>months ended Se<"
+     },
+     {
+      "tool": "grep",
+      "input": {
+       "query": "Nine Months Ended",
+       "context": 3,
+       "max_matches": 15
+      },
+      "result": "anthropic-s1a3.md\n  340- \n  341- \n  342- \n  343: |Other income (expense), net<br>Total other income (expense), net<br>Loss before provision for income taxes<br>Provision for income taxes<br>Net loss(2)<br>______________<br>(1)Includes stock-based compensation expense of $29 million, $ 2023, 2024, and 2025, respectively, and $591 million and $3.3<br>2026, respectively.<br>(2)Includes change in fair value of convertible notes, derivative<br>which were $1.0 billion, $5.4 billion, and $34.3 billion for the<br>and $20.1 billion and $94.3 billion fo …[truncated]\n  344- |---|---|---|---|\n  345- |Net loss per share attributable to common<br>stockholders, basic and diluted|$(1.42)|$(5.43)|$(23|\n  346- |Weighted-average number of shares<br>outstanding, basic and diluted|1,076,880,510|1,528,994,540|1,82|\n  --\n  350- \n  351- Pro forma adjustment to reflect the Convertible Notes Conversion \n  352- \n  353: ______________ Weighted-average number of shares outstanding used to compute pro forma net loss per share, basic and diluted(1)(2) (1)The unaudited pro forma net loss per share and pro forma weighted-average number of shares used in computing pro forma net loss per share give effect to (i) the Preferred Stock Conversion, as if such conversion had occurred on January 1, 2025, (ii) the Pro forma net loss per share, basic and diluted(1)(2) Convertible Notes Conversion, as if such conversion had occ …[truncated]\n  354- \n  355- (2)As of September 30, 2026, unrecognized stock-based compensatio"
+     },
+     {
+      "tool": "grep",
+      "input": {
+       "query": "disaggregat",
+       "context": 6,
+       "max_matches": 5
+      },
+      "result": "anthropic-s1a3.md\n  4114- In July 2025, the FASB issued ASU 2025-05, _Financial Instruments—Credit Losses (Topic 326): Measurement of Credit Losses for Accounts Receivable and Contract Assets_ (“ASU 2025-05”). ASU 2025-05 provides all entities with a practical expedient when estimating expected credit losses for current accounts receivable and current contract assets arising from transactions accounted for under ASC 606. All entities may elect a practical expedient that assumes that current conditions as of the balance s …[truncated]\n  4115- \n  4116- In September 2025, the FASB issued ASU 2025-06, _Intangibles—Goodwill and Other—Internal-Use Software (Subtopic 350-40): Targeted Improvements to the Accounting for Internal-Use Software_ ASU 2025-06 modernizes the guidance for costs incurred in connection with internal-use software by removing references to prescriptive development stages. Under ASU 2025-06, an entity may begin capitalizing internaluse software costs when (a) management, with the relevant authority, implicitly or explicitly aut …[truncated]\n  4117- \n  4118- ##### **_Recently Issued Accounting Pronouncements Not Yet Adopted_** \n  4119- \n  4120: In November 2024, the FASB issued ASU 2024-03, _Disaggregation of Income Statement Expenses (Subtopic 220-40_ ) (“ASU 2024-03”), and in January 2025, the FASB issued ASU 2025-01, _Comprehensive Income-Expense Disaggregation Disclosures (Subtopic 220-40): Clarifying the Effective Date_ (“ASU 2025-01”). ASU 2024-03 requires "
+     },
+     {
+      "tool": "read",
+      "input": {
+       "path": "anthropic-s1a3.md",
+       "start_line": 1550,
+       "end_line": 1562
+      },
+      "result": "1550: ### **How We Generate Revenue** \n1551: \n1552: At the foundation of our business is our family of four Claude model classes—Mythos (including Fable), Opus, Sonnet, and Haiku—each optimized for a different point on the capability-cost-speed curve. Our frontier models allow customers to match the right model to each use case. Customers typically use higher-capability models for complex reasoning, coding, and agentic workflows where greater model intelligence is required. Customers also frequently adopt our full range of models, routing individ …[truncated]\n1553: \n1554: ###### **<u>Table of Contents</u>** \n1555: \n1556: \n1557: \n1558: minimum spend commitments in exchange for a committed price list. These contracts result primarily in consumption-based revenue. \n1559: \n1560: \n1561: \n1562: Consumption-based revenue increased from $288 million, or 75% of total revenue, for the year ended December 31, 2024, to $3.8 billion, or 83% of total revenue, for the year ended December 31, 2025, to $26.3 billion, or 79% of total revenue, for the nine months ended September 30, 2026. Subscription-based revenue increased from $98 million, or 25% of total revenue, to $789 million, or 17% of total revenue, to $6.9 billion, or 21% of total revenue, over the same periods. The larger dollar increase …[truncated]"
+     }
+    ],
+    "answer": "The S-1 doesn't report a separate \"API\" revenue line. The closest figure is consumption-based revenue (usage-billed), which was $26.3 billion, or 79% of total revenue, for the nine months ended September 30, 2026, at line 1562 of `anthropic-s1a3.md`.",
+    "ms": 15543,
+    "turns": 11,
+    "cost": 0.1441
+   }
+  },
+  {
+   "q": "Does Anthropic depend on one big customer for its revenue?",
+   "gold": [
+    "No single customer represented more than 10%"
+   ],
+   "lines": [
+    664,
+    1624
+   ],
+   "rag": {
+    "ids": [
+     204,
+     321,
+     289,
+     98,
+     439,
+     7,
+     300,
+     199,
+     22,
+     21,
+     3,
+     207,
+     208,
+     6,
+     0,
+     298
+    ],
+    "hit8": false,
+    "hit16": true
+   },
+   "kw": {
+    "ids": [
+     489,
+     448,
+     297,
+     10,
+     11,
+     447,
+     282,
+     81,
+     207,
+     82,
+     273,
+     210,
+     495,
+     83,
+     202,
+     209
+    ],
+    "hit8": false,
+    "hit16": true
+   },
+   "agent": {
+    "steps": [
+     {
+      "tool": "grep",
+      "input": {
+       "query": "customer concentration",
+       "context": 3
+      },
+      "result": "No matches for 'customer concentration'. Try a shorter query, a single distinctive word, or memory_outline to navigate by section headings instead."
+     },
+     {
+      "tool": "grep",
+      "input": {
+       "query": "% of our revenue",
+       "context": 3
+      },
+      "result": "anthropic-s1a3.md\n  661- \n  662- ##### **_our prospects, business, and financial condition._** \n  663- \n  664: A substantial portion of our revenue is driven by a limited number of customers. While no single customer represented more than 10% of our revenue for the nine months ended September 30, 2026, our top five customers represented approximately 25% of our revenue for the nine months ended September 30, 2026. Many of our top customers are not subject to long-term contracts with us or have contracts with near-term expiration dates and are able to reduce or in some cases cease spending at any time and …[truncated]\n  665- \n  666- We anticipate that we will continue to derive a significant portion of our revenue from a limited number of customers for the foreseeable future, and in some cases, the portion of our revenue attributable to certain customers may increase in the future. The composition of our customer base, including our top customers, may \n  667- \n  --\n  1621- \n  1622- We compare this measure against our largest Fortune 500 customers, who are further along in their adoption of AI. For the three months ended September 30, 2026, revenue from our top 10 Fortune 500 customers represented, on average, less than 1% of their total expenses—still a small fraction of their overall spend, but over eight times the average of our Fortune 500 customers with $100,000 or more of revenue on a TTM basis. We believe the difference reflects the substantial runway we have to deep …[t"
+     }
+    ],
+    "answer": "No. The S-1 says \"no single customer represented more than 10% of our revenue for the nine months ended September 30, 2026,\" though its top five customers made up about 25% (anthropic-s1a3.md, line 664; the same 10% statement is repeated at line 1624).",
+    "ms": 6870,
+    "turns": 4,
+    "cost": 0.0693
+   }
+  },
+  {
+   "q": "How long before insiders can sell their shares after the IPO?",
+   "gold": [
+    "180 days"
+   ],
+   "lines": [
+    3601
+   ],
+   "rag": {
+    "ids": [
+     393,
+     392,
+     413,
+     385,
+     8,
+     411,
+     394,
+     395,
+     419,
+     412,
+     401,
+     189,
+     7,
+     320,
+     179,
+     373
+    ],
+    "hit8": false,
+    "hit16": true
+   },
+   "kw": {
+    "ids": [
+     394,
+     294,
+     375,
+     304,
+     395,
+     232,
+     15,
+     289,
+     293,
+     179,
+     295,
+     392,
+     359,
+     273,
+     298,
+     402
+    ],
+    "hit8": false,
+    "hit16": true
+   },
+   "agent": {
+    "steps": [
+     {
+      "tool": "grep",
+      "input": {},
+      "result": "Error executing tool memory_grep: 1 validation error for memory_grepArguments\nquery\n  Field required [type=missing, input_value={}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.14/v/missing\n\nThis tool's input schema was not in your prompt when you called it. The input schema is: {\"type\":\"object\",\"properties\":{\"query\":{\"title\":\"Query\",\"type\":\"string\"},\"path\":{\"default\":\"\",\"title\":\"Path\",\"type\":\"string\"},\"regex\":{\"default\":false,\"title\":\"Regex\",\"type\":\"boolean\"},\"case_sensitive\":{\"default\":false,\"title\":\"Case Sensitive\",\"type\":\"boolean\"},\"include\":{\"default\":\"*.md\",\"title\":\"Include\",\"type\":\"string\"},\"context\":{\"default\":2,\"title\":\"Context\",\"type\":\"integer\"},\"max_matches\":{\"default\":25,\"title\":\"Max Matches\",\"type\":\"integer\"}},\"required\":[\"query\"],\"title\":\"memory_grepArguments\"}\nIf your input does not match this schema, correct it and call the tool again. If it matches, the error above has another cause. If the corrected call fails the same way, call ToolSearch with query \"select:mcp__read__memory_grep\" to load the tool, then call it again."
+     },
+     {
+      "tool": "grep",
+      "input": {
+       "query": "lock-up",
+       "regex": true
+      },
+      "result": "anthropic-s1a3.md\n  45- ____________(1)See the section titled “Underwriting” for a description of the compensation payable to the underwriters. **effective. This preliminary prospectus is not an offer to sell nor does it seek an offer to buy these securities in any jurisdiction where the offer or sale is not permitted.** \n  46- \n  47: To the extent that the underwriters sell more than 825,000,000 shares of Class A common stock, the underwriters have the option to purchase up to an additional 123,750,000 shares of Class A common stock from Anthropic, PBC at the initial public offering price less the underwriting discount. The underwriters expect to deliver the shares against payment in New York, New York, on or about           . We have entered into an agreement with each of Advanced Micro Devices, Inc., Broadcom Inc., Google  …[truncated]\n  48- \n  49- in this offering at the initial public offering price at an aggregate purchase price of up to $303 million. Because these indications of interest are not binding agreements or commitments to purchase, the underwriters could determine to sell more, fewer, or no shares to any of these individuals or entities and these individuals or entities could determine to purchase more, fewer, or no shares in this offering. The underwriters will receive the same underwriting discounts and commissions on share …[truncated]\n  50- \n  51- ###### **Prospectus dated** \n  --\n  1300- - •changes in the operating performance and stock market valuations"
+     }
+    ],
+    "answer": "Insiders are generally restricted for up to 180 days after the date of the prospectus (line 3601), though the S-1 also describes staggered early releases and a 365-day cap for the seven co-founders (line 3511).",
+    "ms": 6744,
+    "turns": 3,
+    "cost": 0.0765
+   }
+  },
+  {
+   "q": "How much voting power do the founders keep after the IPO?",
+   "gold": [
+    "50.1%"
+   ],
+   "lines": [
+    35,
+    219
+   ],
+   "rag": {
+    "ids": [
+     392,
+     391,
+     373,
+     4,
+     175,
+     319,
+     372,
+     313,
+     323,
+     371,
+     19,
+     179,
+     162,
+     390,
+     365,
+     161
+    ],
+    "hit8": true,
+    "hit16": true
+   },
+   "kw": {
+    "ids": [
+     372,
+     391,
+     175,
+     392,
+     174,
+     319,
+     373,
+     172,
+     358,
+     176,
+     371,
+     179,
+     231,
+     359,
+     159,
+     160
+    ],
+    "hit8": true,
+    "hit16": true
+   },
+   "agent": {
+    "steps": [
+     {
+      "tool": "grep",
+      "input": {
+       "query": "voting power founders",
+       "max_matches": 10
+      },
+      "result": "No matches for 'voting power founders'. Try a shorter query, a single distinctive word, or memory_outline to navigate by section headings instead."
+     },
+     {
+      "tool": "grep",
+      "input": {
+       "query": "voting power",
+       "max_matches": 10
+      },
+      "result": "anthropic-s1a3.md\n  33- stockholders identified in this prospectus are selling an additional 23,648,646 shares of Class A common stock. We will not receive any proceeds from the sale of shares of our Class A common stock by any of the selling stockholders. Prior to this offering, there has been no public market for our Class A common stock. It is currently estimated that the initial public offering price per share will be between $70.00 and $78.00. We have been approved to list our Class A common stock on the Nasdaq Gl …[truncated]\n  34- \n  35: equals 50.1% of the total voting power of our outstanding shares of capital stock with respect to matters submitted to stockholders generally, including the election of our directors other than the Class T directors. Our Class F common stock will not have any economic rights. Immediately prior to the completion of this offering, we will also authorize a special class of our common stock, Class E common stock, which will be issued to our employees, excluding our co-founders. Our Class E common st …[truncated]\n  36- \n  37- **Neither the Securities and Exchange Commission nor any other regulatory body has approved or disapproved of these securities or passed upon the accuracy or adequacy of this prospectus. Any representation to the contrary is a criminal offense.** \n  --\n  217- the sole members (the “Founder LLC”). \n  218- \n  219: Our Class F common stock will be entitled to an aggregate number of votes that equals 50.1% of the total vot"
+     }
+    ],
+    "answer": "The founders keep 50.1% of the total voting power after the IPO. It is held through a single share of Class F common stock owned by the Founder LLC, and I read it at line 219 of `anthropic-s1a3.md`. The same figure appears at lines 35, 1238 and 2770.",
+    "ms": 7967,
+    "turns": 4,
+    "cost": 0.077
+   }
+  }
+ ],
+ "dim": 768,
+ "n": 504,
+ "scale": 127.0,
+ "prefix": "Represent this sentence for searching relevant passages: ",
+ "filing": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026074338/0001628280-26-074338-index.htm"
+}
