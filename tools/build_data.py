@@ -61,7 +61,9 @@ for i, (q, golds, gl) in enumerate(QS, 1):
     row = {"q": q, "gold": golds, "lines": gl}
     for name, r in (("rag", dense), ("kw", bm25)):
         hits = r.retrieve(q, 16)
-        row[name] = {"ids": [h.chunk.chunk_id for h in hits], "hit8": has("\n".join(h.chunk.text for h in hits[:8]), golds), "hit16": has("\n".join(h.chunk.text for h in hits), golds)}
+        allr = r.retrieve(q, len(chunks))
+        rank = next((n + 1 for n, h in enumerate(allr) if has(h.chunk.text, golds)), None)
+        row[name] = {"ids": [h.chunk.chunk_id for h in hits], "hit8": has("\n".join(h.chunk.text for h in hits[:8]), golds), "hit16": has("\n".join(h.chunk.text for h in hits), golds), "rank": rank}
     steps, final, meta = trajectory(i)
     row["agent"] = {"steps": steps, "answer": final, **meta}
     qs.append(row)
@@ -75,4 +77,4 @@ json.dump({"questions": qs, "dim": int(emb.shape[1]), "n": len(chunks), "scale":
            "filing": "https://www.sec.gov/Archives/edgar/data/2130357/000162828026074338/0001628280-26-074338-index.htm"},
           open(OUT / "questions.json", "w"), indent=1, ensure_ascii=False)
 print("chunks", len(chunks), "lines", len(lines))
-for r in qs: print(f"{'Y' if r['rag']['hit8'] else '-'} {'Y' if r['kw']['hit8'] else '-'} steps={len(r['agent']['steps'])} {r['agent'].get('ms')}ms  {r['q']}")
+for r in qs: print(f"rag#{r['rag']['rank']} kw#{r['kw']['rank']} steps={len(r['agent']['steps'])} {r['agent'].get('ms')}ms  {r['q']}")

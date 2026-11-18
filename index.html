@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Space+Grotesk:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=2">
+<link rel="stylesheet" href="style.css?v=3">
 </head>
 <body>
 <div class="ambient" aria-hidden="true"><div class="dot-grid"></div><div class="blob b1"></div><div class="blob b2"></div></div>
@@ -69,17 +69,26 @@
 
   <section id="race">
     <p class="eyebrow">Side by side</p>
-    <h2>Pick a question and watch each method search</h2>
-    <ol class="qlist" id="qlist"></ol>
+    <h2>Which questions each method got</h2>
+    <p class="section-sub">A filled dot means the answer reached the model. RAG and keyword search only hand over their top 8 chunks, so the number is where the chunk holding the answer actually ranked. Pick a row to watch all three search.</p>
+
+    <div class="card matrix-card">
+      <table class="matrix" id="matrix">
+        <thead><tr><th class="label">Question</th><th class="label">Vector RAG</th><th class="label">Keyword</th><th class="label">Agent</th></tr></thead>
+        <tbody></tbody>
+        <tfoot><tr><td class="label">Answered</td><td class="tot">6/10</td><td class="tot">4/10</td><td class="tot win">10/10</td></tr></tfoot>
+      </table>
+    </div>
+
     <form class="field wide" id="custom"><input id="customQ" placeholder="Or ask your own question about the filing" autocomplete="off" maxlength="200"><button class="btn">Ask</button></form>
-    <p class="fine" id="customNote" hidden>Your own questions run RAG and keyword search live on your device. The first one downloads a 110 MB embedding model. The agent column replays recorded runs, so it only covers the ten tested questions.</p>
+    <p class="fine" id="customNote" hidden>Your own questions run RAG and keyword search live on your device. The first one downloads a 110 MB embedding model. The agent can run live on an open model in your browser, see the agent column.</p>
 
     <div class="arena" id="arena" hidden>
       <p class="arena-q" id="arenaQ"></p>
       <div class="cols">
-        <div class="card col"><div class="col-head"><p class="label">Vector RAG</p><p class="status" id="st-rag"></p></div><div class="col-body" id="col-rag"></div></div>
-        <div class="card col"><div class="col-head"><p class="label">Keyword search</p><p class="status" id="st-kw"></p></div><div class="col-body" id="col-kw"></div></div>
-        <div class="card col agent"><div class="col-head"><p class="label">Agent</p><p class="status" id="st-ag"></p></div><div class="col-body" id="col-ag"></div></div>
+        <div class="card col"><div class="col-head"><p class="label">Vector RAG</p><p class="status" id="st-rag"></p></div><div class="strip" id="strip-rag"></div><div class="col-body" id="col-rag"></div></div>
+        <div class="card col"><div class="col-head"><p class="label">Keyword search</p><p class="status" id="st-kw"></p></div><div class="strip" id="strip-kw"></div><div class="col-body" id="col-kw"></div></div>
+        <div class="card col agent"><div class="col-head"><p class="label" id="agLabel">Agent · Claude Sonnet</p><p class="status" id="st-ag"></p></div><div class="col-body" id="col-ag"></div></div>
       </div>
     </div>
   </section>
@@ -91,6 +100,7 @@
       <div class="card plain"><p class="label">The document</p><p>Anthropic's S-1 amendment filed with the SEC on 17 November 2026, converted to text: 4,733 lines and about 92,000 words. <a id="filingLink" target="_blank" rel="noopener">Read the filing</a>.</p></div>
       <div class="card plain"><p class="label">RAG and keyword search</p><p>Both split the filing into 504 chunks of about 2,000 characters. RAG ranks them with the bge-base embedding model, keyword search with BM25. A question counts when the answer is inside the top 8 chunks. At 16 chunks RAG finds 8 and keyword search 7.</p></div>
       <div class="card plain"><p class="label">The agent</p><p>Claude Sonnet in Claude Code with every tool removed except the paper's search, outline and line reader. Each question ran on its own, and the replays show its real tool calls at their recorded pace.</p></div>
+      <div class="card plain"><p class="label">Your own questions</p><p>RAG and keyword search run live on your device. The agent runs on Qwen3, an open model from Hugging Face, inside your browser with the same three tools. It needs a recent desktop browser with WebGPU and a one-time download of about 1 to 2.3 GB. It is much smaller than Claude, so expect slower and less reliable answers.</p></div>
       <div class="card plain"><p class="label">Limits</p><p>Ten questions on one document, so this is a demo, not a benchmark. RAG and keyword search are scored on whether the answer reached the model, the agent on its final answer. The agent is slower and costs more: about 9 seconds and 8 cents a question.</p></div>
     </div>
   </section>
@@ -107,6 +117,6 @@
   </div>
 </div>
 
-<script type="module" src="app.js?v=2"></script>
+<script type="module" src="app.js?v=7"></script>
 </body>
 </html>

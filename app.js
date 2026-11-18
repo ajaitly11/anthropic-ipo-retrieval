@@ -20,17 +20,18 @@ async function load() {
   DOC = doc.lines; CHUNKS = chunks; META = meta; EMB = new Int8Array(emb);
   bm25 = buildBM25(CHUNKS.map((c) => c.text));
   $("filingLink").href = META.filing;
-  const list = $("qlist");
+  const tb = document.querySelector("#matrix tbody");
   META.questions.forEach((q, i) => {
-    const li = document.createElement("li");
-    li.innerHTML = `<button><span class="qn">${String(i + 1).padStart(2, "0")}</span><span>${esc(q.q)}</span><span class="arrow">Run</span></button>`;
-    li.firstChild.onclick = () => { mark(li.firstChild); play(i); };
-    list.appendChild(li);
+    const tr = document.createElement("tr");
+    const cell = (m) => `<span class="cell"><span class="dot${q[m].hit8 ? " yes" : ""}"></span><span class="rk">#${q[m].rank ?? "–"}</span></span>`;
+    tr.innerHTML = `<td><span class="q"><span class="qn">${String(i + 1).padStart(2, "0")}</span><span>${esc(q.q)}</span></span></td><td>${cell("rag")}</td><td>${cell("kw")}</td><td><span class="cell"><span class="dot win"></span><span class="rk">${q.agent.steps.length} steps</span></span></td>`;
+    tr.onclick = () => { mark(tr); play(i); };
+    tb.appendChild(tr);
   });
   doGrep(); doOutline(); doRead();
   countUp();
 }
-function mark(b) { document.querySelectorAll(".qlist button").forEach((x) => x.classList.toggle("on", x === b)); }
+function mark(b) { document.querySelectorAll("#matrix tbody tr").forEach((x) => x.classList.toggle("on", x === b)); }
 
 function countUp() {
   document.querySelectorAll(".count").forEach((el) => {
@@ -143,6 +144,18 @@ function snippet(text, golds, terms) {
   const s = Math.max(0, at - 110);
   return (s > 0 ? "…" : "") + text.slice(s, s + 320);
 }
+const AXIS = 50;
+function strip(col, rank) {
+  const el = $("strip-" + col);
+  if (!rank) { el.innerHTML = ""; return; }
+  const pos = (r) => (Math.min(r, AXIS) - 1) / (AXIS - 1) * 100;
+  const out = rank > AXIS, seen = rank <= K;
+  el.innerHTML = `<div class="cap"><span>Where the answer ranked</span><span>${seen ? "Model saw it" : "Model never saw it"}</span></div>
+    <div class="track"><div class="rail"></div><div class="seen" style="width:${pos(K)}%"></div><div class="cut" style="left:${pos(K)}%"></div><div class="mk${out ? " out" : ""}" style="left:0%"></div></div>
+    <div class="ticks"><span>#1</span><span>top ${K} go to the model</span><span>${out ? "#" + rank + " →" : "#" + AXIS}</span></div>`;
+  requestAnimationFrame(() => requestAnimationFrame(() => { el.querySelector(".mk").style.left = pos(rank) + "%"; }));
+  el.querySelector(".cap span").textContent = `Answer ranked #${rank}`;
+}
 function setStatus(col, text, good) { const s = $("st-" + col); s.textContent = text; s.className = "status" + (good ? " good" : ""); }
 
 async function showChunks(col, ids, golds, terms, my) {
@@ -209,9 +222,11 @@ function openArena(title) {
 function play(i) {
   const my = ++run, q = META.questions[i];
   openArena(q.q);
+  strip("rag", q.rag.rank); strip("kw", q.kw.rank);
+  $("agLabel").textContent = "Agent · Claude Sonnet";
   showChunks("rag", q.rag.ids.slice(0, K), q.gold, null, my);
   showChunks("kw", q.kw.ids.slice(0, K), q.gold, null, my);
-  showAgent(q, my);
+  showAgent(q, my).then(() => { if (my === run) liveOffer(q.q, my, true); });
 }
 const STOP = new Set("the a an of to and or in on for is are was were how what when who whom which does do did much many will be by with from at its it this that than more after before about".split(" "));
 async function playCustom(text) {
@@ -219,8 +234,9 @@ async function playCustom(text) {
   openArena(text);
   const terms = tokenize(text).filter((t) => !STOP.has(t));
   showChunks("kw", topK(bm25(text), K), null, terms, my);
-  $("col-ag").innerHTML = `<p class="note-card">The agent replays cover the ten tested questions. To run it on your own question, use the <a href="https://github.com/twospoon/READ" target="_blank" rel="noopener">READ tools</a> with Claude Code, or try them by hand in the section above.</p>`;
-  setStatus("ag", "");
+  strip("rag", null); strip("kw", null);
+  $("col-ag").innerHTML = ""; setStatus("ag", ""); $("agLabel").textContent = "Agent · open model";
+  liveOffer(text, my, false);
   $("col-rag").innerHTML = ""; setStatus("rag", embedder ? "Embedding…" : "Loading model…");
   try {
     const v = await embed(text);
@@ -245,3 +261,139 @@ $("viewer").onclick = (e) => { if (e.target.id === "viewer") $("viewer").hidden 
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") $("viewer").hidden = true; });
 
 load();
+
+// ---- Live agent on an open model (Qwen3 via WebLLM, weights from Hugging Face) ----
+const MODELS = [
+  ["Qwen3-1.7B-q4f16_1-MLC", "Qwen3 1.7B · about 1 GB download"],
+  ["Qwen3-4B-q4f16_1-MLC", "Qwen3 4B · about 2.3 GB, better answers"],
+];
+let engine = null, engineId = null;
+const SYSTEM = `You answer questions about Anthropic's IPO filing, an SEC S-1 of 4,733 lines. You cannot see the filing. You must use tools to find the answer.
+Reply with exactly one JSON object and nothing else. The options are:
+{"tool":"search","query":"..."} finds lines containing a word or number. Use 1 to 3 words in the filing's own wording, and try other words if nothing matches.
+{"tool":"outline","filter":"..."} lists section headings containing a word, with their line numbers.
+{"tool":"read","start":N,"end":M} reads lines N to M, at most 40 lines.
+{"answer":"one sentence with the figure","line":N} gives your final answer, citing a line you actually saw.
+Always start with a search. Never answer from memory.
+Example. Question: How many customers pay Anthropic $10 million or more?
+{"tool":"search","query":"$10 million or more"}
+Result: line 1620: ...approximately 250 customers with $10 million or more of revenue on a TTM basis...
+{"answer":"About 250 customers paid Anthropic $10 million or more over the trailing twelve months.","line":1620}`;
+
+function liveOffer(question, my, afterReplay) {
+  const body = $("col-ag");
+  const box = document.createElement("div"); box.className = "live";
+  if (!navigator.gpu) {
+    box.innerHTML = `<p class="note-card">${afterReplay ? "Want to compare with an open model? " : ""}Running the agent live needs WebGPU, which this browser doesn't have. Try desktop Chrome or Edge.</p>`;
+    body.appendChild(box); return;
+  }
+  box.innerHTML = `<p class="note-card">${afterReplay ? "Now try the same question on an open model running in your browser with the same three tools." : "Run the agent live on an open model from Hugging Face, inside your browser, with the same three tools."}</p>
+    <select aria-label="Model">${MODELS.map(([id, l]) => `<option value="${id}"${id === engineId ? " selected" : ""}>${l}</option>`).join("")}</select>
+    <button class="btn${afterReplay ? " ghost" : ""}">Run the agent live</button>`;
+  box.querySelector("button").onclick = () => { const id = box.querySelector("select").value; box.remove(); runLive(question, id, my, afterReplay); };
+  body.appendChild(box);
+}
+
+async function getEngine(id, onProgress) {
+  if (engine && engineId === id) return engine;
+  const webllm = await import("https://cdn.jsdelivr.net/npm/@mlc-ai/web-llm@0.2.86/+esm");
+  if (engine) { await engine.unload(); engine = null; }
+  engine = await webllm.CreateMLCEngine(id, { initProgressCallback: onProgress });
+  engineId = id;
+  return engine;
+}
+
+function toolRun(call) {
+  const clipL = (l) => `line ${l}: ${clip(DOC[l - 1] || "", 220)}`;
+  if (call.tool === "search") {
+    const hits = grep(String(call.query || ""), 0, 10);
+    return hits.length ? hits.map(clipL).join("\n") : `No lines contain "${call.query}". Try a different word.`;
+  }
+  if (call.tool === "outline") {
+    const f = String(call.filter || "").toLowerCase(), out = [];
+    DOC.forEach((line, i) => { const m = line.match(HEAD); if (!m) return; const t = headingText(m[2]); if (t && !/table of contents/i.test(t) && (!f || t.toLowerCase().includes(f))) out.push(`line ${i + 1}: ${t}`); });
+    return out.length ? out.slice(0, 15).join("\n") : `No headings contain "${call.filter}".`;
+  }
+  if (call.tool === "read") {
+    let a = Math.max(1, parseInt(call.start, 10) || 1), b = Math.min(DOC.length, parseInt(call.end, 10) || a + 10);
+    if (b < a) b = a; b = Math.min(b, a + 39);
+    const out = []; for (let l = a; l <= b; l++) if ((DOC[l - 1] || "").trim()) out.push(clipL(l));
+    return clip(out.join("\n"), 2400) || "Those lines are empty.";
+  }
+  return 'Unknown tool. Use "search", "outline", "read", or give your "answer".';
+}
+
+function parseCall(text) {
+  const t = text.replace(/<think>[\s\S]*?<\/think>/g, "").trim();
+  const m = t.match(/\{[\s\S]*\}/); const raw = m ? m[0] : t;
+  try { return JSON.parse(raw); } catch {}
+  try { return JSON.parse(raw.replace(/(\d)"(?=\s*[,}])/g, "$1").replace(/:\s*"(\d+)(?=\s*[,}])/g, ":$1")); } catch {}
+  const g = (k) => (raw.match(new RegExp(`"${k}"\\s*:\\s*"?([^",}]+)`)) || [])[1];
+  if (g("tool")) return { tool: g("tool"), query: g("query"), filter: g("filter"), start: g("start"), end: g("end") };
+  return null;
+}
+
+async function runLive(question, id, my, afterReplay) {
+  const body = $("col-ag");
+  if (afterReplay) { const hr = document.createElement("p"); hr.className = "label"; hr.style.margin = "22px 0 4px"; hr.textContent = `Live · ${id.split("-q4")[0].replace("-", " ")}`; body.appendChild(hr); }
+  else $("agLabel").textContent = `Agent · ${id.split("-q4")[0].replace("-", " ")}`;
+  const prog = document.createElement("div"); prog.className = "live";
+  prog.innerHTML = `<p class="note-card" id="progText">Loading the model…</p><div class="progress"><div></div></div>`;
+  body.appendChild(prog);
+  let eng;
+  try {
+    eng = await getEngine(id, (p) => { prog.querySelector("div > div").style.width = Math.round((p.progress || 0) * 100) + "%"; prog.querySelector("p").textContent = (p.text || "Loading…").replace(/\[.*?\]\s*/, ""); });
+  } catch (e) {
+    prog.innerHTML = `<p class="note-card">The download stopped (${esc(String(e.message || e).slice(0, 90))}). Finished parts are saved, so a retry picks up where it left off. It also needs enough free disk space and graphics memory.</p><button class="btn ghost">Retry</button>`;
+    prog.querySelector("button").onclick = () => { prog.remove(); if (afterReplay) body.lastElementChild?.classList?.contains("label") && body.lastElementChild.remove(); runLive(question, id, my, afterReplay); };
+    return;
+  }
+  if (my !== run) return;
+  prog.remove();
+  const t0 = performance.now();
+  const tick = setInterval(() => { if (my !== run) return clearInterval(tick); setStatus("ag", ((performance.now() - t0) / 1000).toFixed(1) + " s"); }, 100);
+  const head = [{ role: "system", content: SYSTEM }, { role: "user", content: `Question: ${question} /no_think` }];
+  let turns = [], answer = null; const seen = new Set();
+  const MAX = 8;
+  for (let n = 0; n < MAX && !answer; n++) {
+    const el = document.createElement("div"); el.className = "item thinking";
+    el.innerHTML = `<div class="meta"><span>Step ${n + 1}</span></div>`; body.appendChild(el);
+    const msgs = [...head, ...turns.slice(-6)];
+    if (n === MAX - 1) msgs.push({ role: "user", content: "No steps left. Give your answer JSON now, from what you have seen. /no_think" });
+    let text = "";
+    try {
+      const r = await eng.chat.completions.create({ messages: msgs, temperature: 0, max_tokens: 160, extra_body: { enable_thinking: false } });
+      text = r.choices[0].message.content || "";
+    } catch (e) { text = ""; }
+    if (my !== run) return clearInterval(tick);
+    const call = parseCall(text);
+    if (!call) { el.className = "item"; el.innerHTML = `<div class="meta"><span>Step ${n + 1}</span></div><div class="call">unreadable reply</div><div class="res">${esc(text.slice(0, 300))}</div>`; el.onclick = () => el.classList.toggle("open"); turns.push({ role: "assistant", content: text || "{}" }, { role: "user", content: "Reply with one JSON object only. /no_think" }); continue; }
+    if (call.answer) {
+      const l = parseInt(call.line, 10);
+      if (seen.size && seen.has(l)) { el.remove(); answer = call; break; }
+      const why = seen.size ? `Line ${call.line} isn't one you have seen. Read it or search again before answering.` : "You haven't looked at the filing yet. Start with a search.";
+      el.className = "item"; el.innerHTML = `<div class="meta"><span>Step ${n + 1}</span></div><div class="call">answer rejected</div><div class="res">${esc(why)}</div>`; el.onclick = () => el.classList.toggle("open");
+      turns.push({ role: "assistant", content: JSON.stringify(call) }, { role: "user", content: why + " /no_think" });
+      continue;
+    }
+    const result = toolRun(call);
+    for (const m of result.matchAll(/^line (\d+):/gm)) seen.add(+m[1]);
+    el.className = "item";
+    el.innerHTML = `<div class="meta"><span>Step ${n + 1}</span><span>Show result</span></div><div class="call">${esc(callText({ tool: call.tool, input: { query: call.query, start_line: call.start, end_line: call.end } }) + (call.tool === "outline" && call.filter ? ` "${call.filter}"` : ""))}</div><div class="res">${esc(result)}</div>`;
+    el.onclick = () => el.classList.toggle("open");
+    turns.push({ role: "assistant", content: JSON.stringify(call) }, { role: "user", content: `Result:\n${result}\n\nNext JSON? /no_think` });
+  }
+  clearInterval(tick);
+  const ans = document.createElement("div"); ans.className = "answer";
+  if (answer) {
+    const l = parseInt(answer.line, 10);
+    ans.innerHTML = esc(String(answer.answer)) + (l ? ` <span class="lnk" data-l="${l}">line ${l}</span>` : "");
+    const lk = ans.querySelector(".lnk"); if (lk) lk.onclick = () => openViewer(l, l, `Line ${l}`);
+  } else ans.textContent = "The model ran out of steps without an answer.";
+  body.appendChild(ans);
+  const secs = ((performance.now() - t0) / 1000).toFixed(1);
+  setStatus("ag", `${secs} s · live`, !!answer);
+  const fine = document.createElement("p"); fine.className = "fine";
+  fine.textContent = "Small open models can misread or invent figures. Click the line to check it.";
+  body.appendChild(fine);
+}

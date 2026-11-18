@@ -28,7 +28,8 @@
      204
     ],
     "hit8": true,
-    "hit16": true
+    "hit16": true,
+    "rank": 6
    },
    "kw": {
     "ids": [
@@ -50,7 +51,8 @@
      248
     ],
     "hit8": true,
-    "hit16": true
+    "hit16": true,
+    "rank": 1
    },
    "agent": {
     "steps": [
@@ -105,7 +107,8 @@
      476
     ],
     "hit8": false,
-    "hit16": false
+    "hit16": false,
+    "rank": 20
    },
    "kw": {
     "ids": [
@@ -127,7 +130,8 @@
      48
     ],
     "hit8": true,
-    "hit16": true
+    "hit16": true,
+    "rank": 8
    },
    "agent": {
     "steps": [
@@ -204,7 +208,8 @@
      298
     ],
     "hit8": true,
-    "hit16": true
+    "hit16": true,
+    "rank": 4
    },
    "kw": {
     "ids": [
@@ -226,7 +231,8 @@
      300
     ],
     "hit8": false,
-    "hit16": false
+    "hit16": false,
+    "rank": 124
    },
    "agent": {
     "steps": [
@@ -281,7 +287,8 @@
      298
     ],
     "hit8": false,
-    "hit16": false
+    "hit16": false,
+    "rank": 20
    },
    "kw": {
     "ids": [
@@ -303,7 +310,8 @@
      343
     ],
     "hit8": true,
-    "hit16": true
+    "hit16": true,
+    "rank": 3
    },
    "agent": {
     "steps": [
@@ -360,7 +368,8 @@
      204
     ],
     "hit8": true,
-    "hit16": true
+    "hit16": true,
+    "rank": 3
    },
    "kw": {
     "ids": [
@@ -382,7 +391,8 @@
      489
     ],
     "hit8": false,
-    "hit16": false
+    "hit16": false,
+    "rank": 28
    },
    "agent": {
     "steps": [
@@ -457,7 +467,8 @@
      26
     ],
     "hit8": true,
-    "hit16": true
+    "hit16": true,
+    "rank": 1
    },
    "kw": {
     "ids": [
@@ -479,7 +490,8 @@
      7
     ],
     "hit8": false,
-    "hit16": false
+    "hit16": false,
+    "rank": 61
    },
    "agent": {
     "steps": [
@@ -540,7 +552,8 @@
      21
     ],
     "hit8": true,
-    "hit16": true
+    "hit16": true,
+    "rank": 5
    },
    "kw": {
     "ids": [
@@ -562,7 +575,8 @@
      252
     ],
     "hit8": false,
-    "hit16": true
+    "hit16": true,
+    "rank": 15
    },
    "agent": {
     "steps": [
@@ -677,7 +691,8 @@
      298
     ],
     "hit8": false,
-    "hit16": true
+    "hit16": true,
+    "rank": 12
    },
    "kw": {
     "ids": [
@@ -699,7 +714,8 @@
      209
     ],
     "hit8": false,
-    "hit16": true
+    "hit16": true,
+    "rank": 9
    },
    "agent": {
     "steps": [
@@ -754,7 +770,8 @@
      373
     ],
     "hit8": false,
-    "hit16": true
+    "hit16": true,
+    "rank": 11
    },
    "kw": {
     "ids": [
@@ -776,7 +793,8 @@
      402
     ],
     "hit8": false,
-    "hit16": true
+    "hit16": true,
+    "rank": 16
    },
    "agent": {
     "steps": [
@@ -829,7 +847,8 @@
      161
     ],
     "hit8": true,
-    "hit16": true
+    "hit16": true,
+    "rank": 4
    },
    "kw": {
     "ids": [
@@ -851,7 +870,8 @@
      160
     ],
     "hit8": true,
-    "hit16": true
+    "hit16": true,
+    "rank": 3
    },
    "agent": {
     "steps": [
