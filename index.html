@@ -3,70 +3,110 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>RAG vs an agent on Anthropic's IPO filing</title>
-<meta name="description" content="Three retrieval methods answer ten investor questions from Anthropic's 92,000-word S-1. Watch each one search, live in your browser.">
+<title>Reading Anthropic's IPO filing</title>
+<meta name="description" content="Three retrieval methods answer ten investor questions from Anthropic's 92,000-word S-1. Try the agent's three tools yourself and watch each method search.">
+<meta name="color-scheme" content="light">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Space+Grotesk:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=1">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Space+Grotesk:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
+<div class="ambient" aria-hidden="true"><div class="dot-grid"></div><div class="blob b1"></div><div class="blob b2"></div></div>
+
 <main>
   <header class="hero">
-    <div class="eyebrow">Anthropic S-1 · filed 17 Nov 2026 · runs in your browser</div>
-    <h1>Three ways to make AI read <span class="accent">Anthropic's IPO filing</span></h1>
-    <p class="lede">I asked Anthropic's 92,000-word IPO filing ten questions an investor would ask, using three retrieval methods. Only one got all ten right. Pick a question and watch each method search.</p>
+    <p class="eyebrow reveal">Anthropic S-1 · filed 17 Nov 2026 · 92,000 words</p>
+    <h1 class="reveal">Ten questions. Three ways to read the filing. <span class="accent">One got all ten.</span></h1>
+    <p class="lede reveal">Anthropic goes public this week. I asked its IPO filing ten questions an investor would ask, using three retrieval methods. The winner didn't use a vector database at all. It used three plain tools from a paper by <a href="https://arxiv.org/abs/2608.06305" target="_blank" rel="noopener">IIT Patna and TwoSpoon</a>, and you can try them below.</p>
 
-    <div class="score">
-      <div class="card rag"><span class="tag">Vector RAG</span><span class="num"><b>6</b>/10</span><p>Cuts the filing into 504 chunks and hands the model the 8 closest in meaning.</p></div>
-      <div class="card kw"><span class="tag">Keyword search</span><span class="num"><b>4</b>/10</span><p>Hands the model the 8 chunks that share the most words with your question (BM25).</p></div>
-      <div class="card ag"><span class="tag">Agent with keyword tools</span><span class="num"><b>10</b>/10</span><p>Claude searches, reads, and searches again, using only grep, an outline and a line reader.</p></div>
+    <div class="bento reveal">
+      <article class="card dark win">
+        <div class="orb" aria-hidden="true"></div>
+        <p class="label light">Agent with three tools</p>
+        <p class="big"><span class="count" data-to="10">0</span><span class="of">/10</span></p>
+        <p class="sub">Claude searches, reads, and searches again. Every answer cites the line it came from.</p>
+      </article>
+      <article class="card">
+        <p class="label">Vector RAG</p>
+        <p class="big"><span class="count" data-to="6">0</span><span class="of">/10</span></p>
+        <p class="sub">504 chunks, the 8 closest in meaning go to the model.</p>
+      </article>
+      <article class="card">
+        <p class="label">Keyword search alone</p>
+        <p class="big"><span class="count" data-to="4">0</span><span class="of">/10</span></p>
+        <p class="sub">The 8 chunks that share the most words with the question.</p>
+      </article>
     </div>
-
-    <p class="paper">The agent's tools come from <a href="https://arxiv.org/abs/2608.06305" target="_blank" rel="noopener">"Beyond Top-K"</a>, a paper by a team at IIT Patna and the AI lab TwoSpoon, who found chunk-and-embed RAG breaks on long financial reports. <a href="https://github.com/twospoon/READ" target="_blank" rel="noopener">Their code is open source.</a></p>
   </header>
 
-  <section class="ask">
-    <h2>Pick a question</h2>
-    <div class="chips" id="chips"></div>
-    <form id="custom" class="custom">
-      <input id="customQ" type="text" placeholder="Or type your own question about the filing" autocomplete="off" maxlength="200">
-      <button type="submit">Search</button>
-    </form>
-    <p class="note" id="customNote" hidden>Your own questions run RAG and keyword search live on your device. The first one downloads a 110 MB embedding model, so it takes a moment. The agent column replays recorded runs, so it only covers the ten tested questions.</p>
-  </section>
+  <section id="tools">
+    <p class="eyebrow">The three tools</p>
+    <h2>How the agent reads 92,000 words without chunking them</h2>
+    <p class="section-sub">The filing stays whole. The agent gets three read-only tools and decides which to use next. These run on the real filing, in your browser.</p>
 
-  <section class="race" id="race" hidden>
-    <h2 id="raceQ"></h2>
-    <div class="cols">
-      <div class="col rag"><div class="col-head"><span class="tag">Vector RAG</span><span class="status" id="st-rag"></span></div><div class="body" id="col-rag"></div></div>
-      <div class="col kw"><div class="col-head"><span class="tag">Keyword search</span><span class="status" id="st-kw"></span></div><div class="body" id="col-kw"></div></div>
-      <div class="col ag"><div class="col-head"><span class="tag">Agent</span><span class="status" id="st-ag"></span></div><div class="body" id="col-ag"></div></div>
+    <div class="tools">
+      <article class="card tool">
+        <p class="label"><span class="n">01</span> Keyword search</p>
+        <p class="tool-sub">Every line where a word or number appears, with its line number. Commas and table borders are ignored, so "1900" finds "1,900".</p>
+        <form class="field" id="grepForm"><input id="grepQ" value="SpaceX" autocomplete="off" aria-label="Search the filing"><button class="btn">Search</button></form>
+        <div class="out" id="grepOut"></div>
+      </article>
+      <article class="card tool">
+        <p class="label"><span class="n">02</span> Table of contents</p>
+        <p class="tool-sub">Every heading with its line number, so the agent jumps to the right section instead of guessing.</p>
+        <form class="field" id="outlineForm"><input id="outlineQ" value="contractual" autocomplete="off" aria-label="Filter headings"><button class="btn">Filter</button></form>
+        <div class="out" id="outlineOut"></div>
+      </article>
+      <article class="card tool">
+        <p class="label"><span class="n">03</span> Read lines</p>
+        <p class="tool-sub">Up to 400 lines at once, so the agent can widen its read until it sees the heading that explains a number.</p>
+        <form class="field" id="readForm"><input id="readFrom" value="1978" inputmode="numeric" aria-label="First line"><span class="dash">to</span><input id="readTo" value="1982" inputmode="numeric" aria-label="Last line"><button class="btn">Read</button></form>
+        <div class="out" id="readOut"></div>
+      </article>
     </div>
   </section>
 
-  <section class="how">
+  <section id="race">
+    <p class="eyebrow">Side by side</p>
+    <h2>Pick a question and watch each method search</h2>
+    <ol class="qlist" id="qlist"></ol>
+    <form class="field wide" id="custom"><input id="customQ" placeholder="Or ask your own question about the filing" autocomplete="off" maxlength="200"><button class="btn">Ask</button></form>
+    <p class="fine" id="customNote" hidden>Your own questions run RAG and keyword search live on your device. The first one downloads a 110 MB embedding model. The agent column replays recorded runs, so it only covers the ten tested questions.</p>
+
+    <div class="arena" id="arena" hidden>
+      <p class="arena-q" id="arenaQ"></p>
+      <div class="cols">
+        <div class="card col"><div class="col-head"><p class="label">Vector RAG</p><p class="status" id="st-rag"></p></div><div class="col-body" id="col-rag"></div></div>
+        <div class="card col"><div class="col-head"><p class="label">Keyword search</p><p class="status" id="st-kw"></p></div><div class="col-body" id="col-kw"></div></div>
+        <div class="card col agent"><div class="col-head"><p class="label">Agent</p><p class="status" id="st-ag"></p></div><div class="col-body" id="col-ag"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="method">
+    <p class="eyebrow">The fine print</p>
     <h2>How the test worked</h2>
-    <div class="grid">
-      <div><b>The document</b><p>Anthropic's S-1 amendment filed with the SEC on 17 November 2026, converted to text: 4,733 lines and about 92,000 words. <a id="filingLink" target="_blank" rel="noopener">Read the filing</a>.</p></div>
-      <div><b>RAG and keyword search</b><p>Both split the filing into 504 chunks of about 2,000 characters. RAG ranks chunks with the bge-base embedding model, keyword search with BM25. A question counts as found when the answer is inside the top 8 chunks. At 16 chunks RAG finds 8 and keyword search 7.</p></div>
-      <div><b>The agent</b><p>Claude Sonnet in Claude Code, with every tool removed except the paper's grep, outline and line reader. Each question ran on its own. The replays show its real tool calls and results at their recorded pace.</p></div>
-      <div><b>Limits</b><p>Ten questions on one document, so treat this as a demo, not a benchmark. RAG and keyword search are scored on whether the answer reached the model, the agent on its final answer. The agent is slower and costs more: about 9 seconds and 8 cents a question here, against well under a second for the other two.</p></div>
+    <div class="grid2">
+      <div class="card plain"><p class="label">The document</p><p>Anthropic's S-1 amendment filed with the SEC on 17 November 2026, converted to text: 4,733 lines and about 92,000 words. <a id="filingLink" target="_blank" rel="noopener">Read the filing</a>.</p></div>
+      <div class="card plain"><p class="label">RAG and keyword search</p><p>Both split the filing into 504 chunks of about 2,000 characters. RAG ranks them with the bge-base embedding model, keyword search with BM25. A question counts when the answer is inside the top 8 chunks. At 16 chunks RAG finds 8 and keyword search 7.</p></div>
+      <div class="card plain"><p class="label">The agent</p><p>Claude Sonnet in Claude Code with every tool removed except the paper's search, outline and line reader. Each question ran on its own, and the replays show its real tool calls at their recorded pace.</p></div>
+      <div class="card plain"><p class="label">Limits</p><p>Ten questions on one document, so this is a demo, not a benchmark. RAG and keyword search are scored on whether the answer reached the model, the agent on its final answer. The agent is slower and costs more: about 9 seconds and 8 cents a question.</p></div>
     </div>
   </section>
 
   <footer>
-    <p>Built by <b>Arnav Jaitly</b> on the open-source <a href="https://github.com/twospoon/READ" target="_blank" rel="noopener">READ</a> tools (MIT licence). The filing is a public SEC document. Not investment advice.</p>
+    <p>Built by Arnav Jaitly · <a href="https://instagram.com/arnitly" target="_blank" rel="noopener">@arnitly</a> · on the open-source <a href="https://github.com/twospoon/READ" target="_blank" rel="noopener">READ tools</a>. The filing is a public SEC document. Not investment advice.</p>
   </footer>
 </main>
 
 <div class="viewer" id="viewer" hidden>
   <div class="viewer-box">
-    <div class="viewer-head"><span id="viewerTitle"></span><button id="viewerClose" aria-label="Close">×</button></div>
+    <div class="viewer-head"><p class="label" id="viewerTitle"></p><button id="viewerClose" class="icon" aria-label="Close">×</button></div>
     <div class="viewer-body" id="viewerBody"></div>
   </div>
 </div>
 
-<script type="module" src="app.js?v=1"></script>
+<script type="module" src="app.js?v=2"></script>
 </body>
 </html>
