@@ -3,22 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Reading Anthropic's IPO filing</title>
-<meta name="description" content="Three retrieval methods answer ten investor questions from Anthropic's 92,000-word S-1. Try the agent's three tools yourself and watch each method search.">
+<title>AI agent beats RAG on Anthropic's IPO filing</title>
+<meta name="description" content="An AI agent with three plain search tools answered ten of ten investor questions from Anthropic&#39;s IPO filing. Standard RAG answered six. Try the tools and watch each method search.">
 <meta name="color-scheme" content="light">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Space+Grotesk:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=3">
+<link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
 <div class="ambient" aria-hidden="true"><div class="dot-grid"></div><div class="blob b1"></div><div class="blob b2"></div></div>
 
 <main>
   <header class="hero">
-    <p class="eyebrow reveal">Anthropic S-1 · filed 17 Nov 2026 · 92,000 words</p>
-    <h1 class="reveal">Ten questions. Three ways to read the filing. <span class="accent">One got all ten.</span></h1>
-    <p class="lede reveal">Anthropic goes public this week. I asked its IPO filing ten questions an investor would ask, using three retrieval methods. The winner didn't use a vector database at all. It used three plain tools from a paper by <a href="https://arxiv.org/abs/2608.06305" target="_blank" rel="noopener">IIT Patna and TwoSpoon</a>, and you can try them below.</p>
+    <p class="eyebrow reveal">Experiment · Anthropic S&#8209;1 · 19 Nov 2026</p>
+    <h1 class="reveal">An AI agent with three search tools beat RAG on Anthropic's IPO filing</h1>
+    <p class="lede reveal">A new paper from IIT Patna and TwoSpoon says <span class="nw">chunk-and-embed</span> RAG breaks on long financial documents, and that an agent with plain search tools reads them better. I tested that claim on Anthropic's <span class="nw">92,000-word</span> S&#8209;1 with ten investor questions. The agent answered all ten. Standard RAG answered six.</p>
 
     <div class="bento reveal">
       <article class="card dark win">
@@ -97,8 +97,8 @@
     <p class="eyebrow">The fine print</p>
     <h2>How the test worked</h2>
     <div class="grid2">
-      <div class="card plain"><p class="label">The document</p><p>Anthropic's S-1 amendment filed with the SEC on 17 November 2026, converted to text: 4,733 lines and about 92,000 words. <a id="filingLink" target="_blank" rel="noopener">Read the filing</a>.</p></div>
-      <div class="card plain"><p class="label">RAG and keyword search</p><p>Both split the filing into 504 chunks of about 2,000 characters. RAG ranks them with the bge-base embedding model, keyword search with BM25. A question counts when the answer is inside the top 8 chunks. At 16 chunks RAG finds 8 and keyword search 7.</p></div>
+      <div class="card plain"><p class="label">The document</p><p>Anthropic's S&#8209;1 amendment filed with the SEC on 17 November 2026, converted to text: 4,733 lines and about 92,000 words. <a id="filingLink" target="_blank" rel="noopener">Read the filing</a>.</p></div>
+      <div class="card plain"><p class="label">RAG and keyword search</p><p>Both split the filing into 504 chunks of about 2,000 characters. RAG ranks them with the <span class="nw">bge-base</span> embedding model, keyword search with BM25. A question counts when the answer is inside the top 8 chunks. At 16 chunks RAG finds 8 and keyword search 7.</p></div>
       <div class="card plain"><p class="label">The agent</p><p>Claude Sonnet in Claude Code with every tool removed except the paper's search, outline and line reader. Each question ran on its own, and the replays show its real tool calls at their recorded pace.</p></div>
       <div class="card plain"><p class="label">Your own questions</p><p>RAG and keyword search run live on your device. The agent runs on Qwen3, an open model from Hugging Face, inside your browser with the same three tools. It needs a recent desktop browser with WebGPU and a one-time download of about 1 to 2.3 GB. It is much smaller than Claude, so expect slower and less reliable answers.</p></div>
       <div class="card plain"><p class="label">Limits</p><p>Ten questions on one document, so this is a demo, not a benchmark. RAG and keyword search are scored on whether the answer reached the model, the agent on its final answer. The agent is slower and costs more: about 9 seconds and 8 cents a question.</p></div>
@@ -117,6 +117,6 @@
   </div>
 </div>
 
-<script type="module" src="app.js?v=7"></script>
+<script type="module" src="app.js?v=8"></script>
 </body>
 </html>

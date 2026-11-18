@@ -183,3 +183,19 @@ footer { margin-top: 112px; padding-top: 24px; border-top: 1px solid var(--line)
 .grid2 .card:last-child:nth-child(odd) { grid-column: 1 / -1; }
 .btn.ghost { background: var(--white); color: var(--ink); border: 1px solid var(--line); }
 .btn.ghost:hover { background: var(--white); border-color: var(--ink); }
+
+/* Wrapping: no breaks inside terms, balanced headlines, one reading measure */
+.nw { white-space: nowrap; }
+h1, h2, .arena-q { text-wrap: balance; }
+p, li, td { text-wrap: pretty; hyphens: manual; overflow-wrap: normal; }
+.lede, .section-sub { max-width: 62ch; }
+h1 { max-width: 18ch; }
+h2 { max-width: 26ch; }
+.tool-sub { min-height: 0; }
+.tools .card.tool .label { min-height: 18px; }
+.card.plain p:not(.label) { max-width: 60ch; }
+footer p { max-width: 72ch; margin: 0; }
+.sub { max-width: 34ch; }
+.matrix th, .cell { white-space: nowrap; }
+.matrix th:not(:first-child), .matrix td:not(:first-child) { width: 128px; }
+@media (max-width: 900px) { .matrix th:not(:first-child), .matrix td:not(:first-child) { width: auto; } .matrix th { white-space: normal; } }
