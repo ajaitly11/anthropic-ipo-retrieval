@@ -55,14 +55,17 @@ function grep(q, ctx = 2, max = 25) {
 function rowsHTML(lines, hitSet, term) {
   let h = "", prev = 0;
   for (const l of lines) {
+    const raw = tidy(DOC[l - 1] || "");
+    if (!raw && !hitSet.has(l)) continue;
     if (prev && l > prev + 1) h += `<div class="gap">···</div>`;
-    let t = esc(clip(DOC[l - 1] || "", 260));
+    let t = esc(clip(raw, 260));
     if (term && hitSet.has(l)) t = t.replace(new RegExp(reEsc(esc(term)), "gi"), (m) => `<mark>${m}</mark>`);
     h += `<div class="row click${hitSet.has(l) ? " hit" : ""}" data-l="${l}"><span class="ln">${l}</span><span>${t}</span></div>`;
     prev = l;
   }
   return h;
 }
+const tidy = (s) => s.replace(/^#{1,6}\s+/, "").replace(/<\/?u>/gi, "").replace(/\*\*/g, "").replace(/(^|\s)_+|_+(\s|$)/g, "$1$2").replace(/\s+/g, " ").trim();
 const clip = (s, n) => (s.length > n ? s.slice(0, n) + " …" : s);
 function wireRows(box) { box.querySelectorAll(".row.click").forEach((r) => (r.onclick = () => { const l = +r.dataset.l; openViewer(l, l, `Line ${l}`); })); }
 

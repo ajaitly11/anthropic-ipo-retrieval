@@ -199,3 +199,25 @@ footer p { max-width: 72ch; margin: 0; }
 .matrix th, .cell { white-space: nowrap; }
 .matrix th:not(:first-child), .matrix td:not(:first-child) { width: 128px; }
 @media (max-width: 900px) { .matrix th:not(:first-child), .matrix td:not(:first-child) { width: auto; } .matrix th { white-space: normal; } }
+
+/* v6: headline measure, fine-print grid, card text fills its card */
+h1 { font-size: clamp(36px, 4.4vw, 62px); line-height: 1.06; max-width: none; }
+@media (min-width: 901px) { h1 .ln1 { display: block; white-space: nowrap; } }
+.hero .lede { margin-top: 24px; }
+.bento { margin-top: 48px; }
+.fine-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; margin-top: 40px; }
+.fine-grid .card { grid-column: span 2; }
+.fine-grid .card:nth-child(n+4) { grid-column: span 3; }
+.card.plain p:not(.label) { max-width: none; }
+.tools .out { max-height: 260px; }
+@media (max-width: 900px) {
+  .fine-grid { grid-template-columns: 1fr; }
+  .fine-grid .card, .fine-grid .card:nth-child(n+4) { grid-column: auto; }
+  h1 { max-width: none; }
+}
+.out { font: 400 14px/1.55 var(--body); }
+.out .row { grid-template-columns: 44px 1fr; }
+.out .row .ln { font: 400 12px/1.9 var(--mono); }
+.out .gap { padding-left: 54px; }
+.matrix .q > :last-child { text-wrap: balance; }
+@media (max-width: 900px) { h1 { font-size: clamp(30px, 8.6vw, 44px); } }
